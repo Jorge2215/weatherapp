@@ -23,6 +23,7 @@
       margin-top: 2rem;
       font-size: 1.2rem;
       color: #333;
+      white-space: pre-line;
     }
   </style>
 </head>
@@ -50,7 +51,15 @@
       try {
         const res = await fetch(`https://climaactual-hzfgeffkg0a6aehv.westus3-01.azurewebsites.net/api/clima?latitude=${lat}&longitude=${lon}`);
         const data = await res.json();
-        document.getElementById("resultado").innerText = `🌡️ Temperatura: ${data.temperatura}°C\n🌥️ Condición: ${data.condicion}`;
+
+        const temperatura = data.clima_actual?.temperatura_2m?.valor;
+        const unidad = data.clima_actual?.temperatura_2m?.unidad;
+        const humedad = data.clima_actual?.humedad_relativa_2m?.valor;
+        const viento = data.clima_actual?.viento_10m?.velocidad?.valor;
+        const fuente = data.fuente;
+
+        document.getElementById("resultado").innerText =
+          `🌡️ Temperatura: ${temperatura}${unidad}\n💧 Humedad: ${humedad}%\n💨 Viento: ${viento} km/h\n📡 Fuente: ${fuente}`;
       } catch (error) {
         document.getElementById("resultado").innerText = "Error al consultar el clima.";
         console.error(error);
