@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
+  "configurations": {
+    "weather-app": {
+      "appLocation": ".",
+      "outputLocation": ".",
+      "appName": "WeatherApp",
+      "resourceGroup": "StaticWebRG"
+    }
+  }
+}

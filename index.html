@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>WeatherApp - Consulta de Clima</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding: 2rem;
+    }
+    input {
+      margin: 0.5rem;
+      padding: 0.5rem;
+      width: 120px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+    }
+    #resultado {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌤️ WeatherApp</h1>
+  <p>Consultá el clima actual por coordenadas</p>
+
+  <input type="text" id="latitud" placeholder="Latitud" />
+  <input type="text" id="longitud" placeholder="Longitud" />
+  <br />
+  <button onclick="consultarClima()">Consultar clima</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    async function consultarClima() {
+      const lat = document.getElementById("latitud").value;
+      const lon = document.getElementById("longitud").value;
+
+      if (!lat || !lon) {
+        document.getElementById("resultado").innerText = "Por favor, ingresá latitud y longitud.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://climaactual-hzfgeffkg0a6aehv.westus3-01.azurewebsites.net/api/clima?latitude=${lat}&longitude=${lon}`);
+        const data = await res.json();
+        document.getElementById("resultado").innerText = `🌡️ Temperatura: ${data.temperatura}°C\n🌥️ Condición: ${data.condicion}`;
+      } catch (error) {
+        document.getElementById("resultado").innerText = "Error al consultar el clima.";
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
